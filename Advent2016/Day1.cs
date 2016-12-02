@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Advent2016
 {
@@ -6,8 +7,9 @@ namespace Advent2016
     {
         private string Input;
         private string[] strings;
-        private int[] position = { 0, 0 };
+        private coordinate position = new coordinate(0, 0); 
         private int direction = 0;
+        private List<coordinate> positions = new List<coordinate>();
 
         public Day1(string input)
         {
@@ -38,16 +40,32 @@ namespace Advent2016
                 switch (direction)
                 {
                     case 0:
-                        position[0] = position[0] + blocks;
+                        for (int i = 1; i <= blocks; i++)
+                        {
+                            position.x = position.x + 1;
+                            positions.Add(new coordinate(position.x, position.y));
+                        }
                         break;
                     case 1:
-                        position[1] = position[1] - blocks;
+                        for (int i = 1; i <= blocks; i++)
+                        {
+                            position.y = position.y - 1;
+                            positions.Add(new coordinate(position.x, position.y));
+                        }
                         break;
                     case 2:
-                        position[0] = position[0] - blocks;
+                        for (int i = 1; i <= blocks; i++)
+                        {
+                            position.x = position.x - 1;
+                            positions.Add(new coordinate(position.x, position.y));
+                        }
                         break;
                     case 3:
-                        position[1] = position[1] + blocks;
+                        for (int i = 1; i <= blocks; i++)
+                        {
+                            position.y = position.y + 1;
+                            positions.Add(new coordinate(position.x, position.y));
+                        }
                         break;
                     default:
                         throw new Exception();
@@ -55,7 +73,20 @@ namespace Advent2016
                 }
 
             }
-            return "Dag 1 ej implementerad" + (Math.Abs(position[0])+Math.Abs(position[1]));
+            List<coordinate> tempList = new List<coordinate>();
+            coordinate intersection = new coordinate(0,0);
+            foreach (coordinate i in positions)
+            {
+                if (tempList.Exists(x=> x.compare(i)))
+                {
+                    intersection = i;
+                    break;
+                }
+                else
+                    tempList.Add(i);
+
+            }
+            return "Lösning del 1: " + (Math.Abs(position.x) + Math.Abs(position.y)) + " Lösning del 2: " + (Math.Abs(intersection.x) + Math.Abs(intersection.y));
             throw new NotImplementedException();
         }
     }
