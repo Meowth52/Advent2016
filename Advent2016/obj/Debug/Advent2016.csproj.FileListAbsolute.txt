@@ -1,0 +1,14 @@
+c:\users\david.l.granberg\documents\visual studio 2015\Projects\Advent2016\Advent2016\bin\Debug\Advent2016.exe.config
+c:\users\david.l.granberg\documents\visual studio 2015\Projects\Advent2016\Advent2016\obj\Debug\Advent2016.csprojResolveAssemblyReference.cache
+c:\users\david.l.granberg\documents\visual studio 2015\Projects\Advent2016\Advent2016\obj\Debug\MainWindow.g.cs
+c:\users\david.l.granberg\documents\visual studio 2015\Projects\Advent2016\Advent2016\obj\Debug\App.g.cs
+c:\users\david.l.granberg\documents\visual studio 2015\Projects\Advent2016\Advent2016\obj\Debug\Advent2016_MarkupCompile.cache
+c:\users\david.l.granberg\documents\visual studio 2015\Projects\Advent2016\Advent2016\obj\Debug\Advent2016_MarkupCompile.lref
+c:\users\david.l.granberg\documents\visual studio 2015\Projects\Advent2016\Advent2016\bin\Debug\Advent2016.exe
+c:\users\david.l.granberg\documents\visual studio 2015\Projects\Advent2016\Advent2016\bin\Debug\Advent2016.pdb
+c:\users\david.l.granberg\documents\visual studio 2015\Projects\Advent2016\Advent2016\obj\Debug\MainWindow.baml
+c:\users\david.l.granberg\documents\visual studio 2015\Projects\Advent2016\Advent2016\obj\Debug\Advent2016.g.resources
+c:\users\david.l.granberg\documents\visual studio 2015\Projects\Advent2016\Advent2016\obj\Debug\Advent2016.Properties.Resources.resources
+c:\users\david.l.granberg\documents\visual studio 2015\Projects\Advent2016\Advent2016\obj\Debug\Advent2016.csproj.GenerateResource.Cache
+c:\users\david.l.granberg\documents\visual studio 2015\Projects\Advent2016\Advent2016\obj\Debug\Advent2016.exe
+c:\users\david.l.granberg\documents\visual studio 2015\Projects\Advent2016\Advent2016\obj\Debug\Advent2016.pdb
