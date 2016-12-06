@@ -20,7 +20,7 @@ namespace Advent2016
     /// </summary>
     public partial class MainWindow : Window
     {
-        int day = 2;
+        int day = 3;
         public MainWindow()
         {
             InitializeComponent();
