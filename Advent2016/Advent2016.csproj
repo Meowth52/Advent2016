@@ -55,7 +55,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Day4.cs" />
+    <Compile Include="Day5.cs" />
+    <Compile Include="Day6.cs" />
+    <Compile Include="Room.cs" />
     <Compile Include="schmenum.cs" />
+    <Compile Include="Stub.cs" />
     <Compile Include="Triangle.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
