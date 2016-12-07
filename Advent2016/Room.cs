@@ -53,16 +53,37 @@ namespace Advent2016
                 }
 
             }
-            schmenums.Sort((x,y) => x.c.CompareTo(y.c));
-            schmenums.Sort((x, y) => y.i.CompareTo(x.i));
+
+
+
+            schmenums.Sort((x, y) => derp(x, y));
+            //schmenums.Sort((x,y) => x.c.CompareTo(y.c));
+            //schmenums.Sort((x, y) => y.i.CompareTo(x.i));
             for (int i = 1; i <=5; i++)
             {
                 ChecksumChecker = String.Concat(ChecksumChecker, schmenums[i-1].c);
             }
             if (Checksum == ChecksumChecker)
+            {
                 return RoomID;
+            }
             else
                 return 0;
+        }
+        public int derp(schmenum x, schmenum y)
+        {
+            if (x.i == y.i)
+            {
+                return x.c.CompareTo(y.c);
+
+
+    }
+            else
+            {
+                return y.i.CompareTo(x.i);
+
+
+    }
         }
     }
 }

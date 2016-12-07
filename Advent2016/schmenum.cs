@@ -4,6 +4,7 @@
     {
         public char c;
         public int i;
+
         public schmenum(char c, int i)
         {
             this.c = c;
