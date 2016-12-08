@@ -9,7 +9,6 @@ namespace Advent2016
         private string Input;
         private string[] Instructions;
         private List<Room> Rooms = new List<Room>();
-        public List<int> fuu = new List<int>();
 
         public Day4(string input)
         {
@@ -24,19 +23,16 @@ namespace Advent2016
         {
             int Resultat = 0;
             int id = 0;
-            //string bajs = "";
+            string DecryptMatch = "northpole";
+            string Resultat2 = "";
             foreach (Room r in Rooms)
             {
                 id=r.getIDifOK();
-                fuu.Add(id);
                 Resultat = Resultat + id; r.getIDifOK();
+                Resultat2 = String.Concat(Resultat2, r.getDecryptMatch(DecryptMatch));
             }
-            //foreach(int i in fuu)
-            //{
-            //    bajs = String.Concat(bajs, i.ToString(),'\n');
-            //}
-            //return bajs;
-            return Resultat.ToString();
+
+            return "Del 1 blir: " + Resultat.ToString() + " del 2 blir: " + Resultat2;
         }
     }
 }

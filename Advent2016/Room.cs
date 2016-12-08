@@ -9,15 +9,20 @@ namespace Advent2016
         public List<string> Groups= new List<string>();
         public int RoomID;
         public string Checksum;
+        public string code="";
         public Room(string s)
         {
 
             Regex GroupsMatch = new Regex(@"\b([a-z]+)[-]");
-            foreach(Match m in GroupsMatch.Matches(s))
+            foreach (Match m in GroupsMatch.Matches(s))
+            {
                 Groups.Add(m.Groups[1].ToString());
+                code = String.Concat(code, m.Value.ToString());
+            }
             Regex IntMatch = new Regex(@"(\d+)[[](\w+)");
             RoomID = Convert.ToInt32 (IntMatch.Match(s).Groups[1].ToString());
             Checksum = IntMatch.Match(s).Groups[2].ToString();
+
         }
         public int getIDifOK()
         {
@@ -70,6 +75,33 @@ namespace Advent2016
             else
                 return 0;
         }
+
+        public string getDecryptMatch(string s)
+        {
+            int NumberOfRotates = RoomID % 26;
+            int CharValue;
+            List<char> DecryptedChars = new List<char>();            
+            foreach (char c in code)
+            {
+                if (c == '-')
+                    DecryptedChars.Add(' ');
+                else
+                    if (c >= 'a' && c <= 'z')
+                {
+                    CharValue = (int)c;
+                    CharValue = CharValue + NumberOfRotates;
+                    if (CharValue > 122)
+                        CharValue = CharValue - 26;
+                    DecryptedChars.Add((char)CharValue);
+                }
+            }
+            string DecryptedString = new string(DecryptedChars.ToArray());
+                    Regex CodeSearch = new Regex(s);
+            if (CodeSearch.IsMatch(DecryptedString))
+                return String.Concat(DecryptedString, RoomID.ToString());
+            else return "";
+        }
+
         public int derp(schmenum x, schmenum y)
         {
             if (x.i == y.i)
