@@ -6,7 +6,6 @@ namespace Advent2016
     {
         private string Input;
         private string[] Instructions;
-        private string TheCode;
         private Button[] Codepad=new Button[10];
         private Button[] Codepad2 = new Button[14];
 

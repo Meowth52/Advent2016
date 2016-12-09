@@ -69,7 +69,6 @@ namespace Advent2016
                         break;
                     default:
                         throw new Exception();
-                        break;
                 }
 
             }
@@ -87,7 +86,6 @@ namespace Advent2016
 
             }
             return "Lösning del 1: " + (Math.Abs(position.x) + Math.Abs(position.y)) + " Lösning del 2: " + (Math.Abs(intersection.x) + Math.Abs(intersection.y));
-            throw new NotImplementedException();
         }
     }
 }
