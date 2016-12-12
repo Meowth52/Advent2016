@@ -16,6 +16,12 @@
         <Button x:Name="Day4button" Content="Day 4" HorizontalAlignment="Left" Margin="0,65,0,0" VerticalAlignment="Top" Width="62" Click="onClick4"/>
         <Button x:Name="Day5button" Content="Day 5" HorizontalAlignment="Left" Margin="0,87,0,0" VerticalAlignment="Top" Width="62" Click="onClick5"/>
         <Button x:Name="Day6button" Content="Day 6" HorizontalAlignment="Left" Margin="0,109,0,0" VerticalAlignment="Top" Width="62" Click="onClick6"/>
+        <Button x:Name="Day7button" Content="Day 7" HorizontalAlignment="Left" Margin="0,131,0,0" VerticalAlignment="Top" Width="62" Click="onClick7"/>
+        <Button x:Name="Day8button" Content="Day 8" HorizontalAlignment="Left" Margin="0,153,0,0" VerticalAlignment="Top" Width="62" Click="onClick8"/>
+        <Button x:Name="Day9button" Content="Day 9" HorizontalAlignment="Left" Margin="0,175,0,0" VerticalAlignment="Top" Width="62" Click="onClick9"/>
+        <Button x:Name="Day10button" Content="Day 10" HorizontalAlignment="Left" Margin="0,197,0,0" VerticalAlignment="Top" Width="62" Click="onClick10"/>
+        <Button x:Name="Day11button" Content="Day 11" HorizontalAlignment="Left" Margin="0,219,0,0" VerticalAlignment="Top" Width="62" Click="onClick11"/>
+        <Button x:Name="Day12button" Content="Day 12" HorizontalAlignment="Left" Margin="0,241,0,0" VerticalAlignment="Top" Width="62" Click="onClick12"/>
 
     </Grid>
 </Window>

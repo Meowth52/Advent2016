@@ -55,9 +55,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Adress.cs" />
+    <Compile Include="Day10.cs" />
+    <Compile Include="Day11.cs" />
+    <Compile Include="Day12.cs" />
     <Compile Include="Day4.cs" />
     <Compile Include="Day5.cs" />
     <Compile Include="Day6.cs" />
+    <Compile Include="Day7.cs" />
+    <Compile Include="Day8.cs" />
+    <Compile Include="Day9.cs" />
     <Compile Include="Room.cs" />
     <Compile Include="schmenum.cs" />
     <Compile Include="Stub.cs" />

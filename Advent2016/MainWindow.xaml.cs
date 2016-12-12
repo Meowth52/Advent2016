@@ -20,7 +20,7 @@ namespace Advent2016
     /// </summary>
     public partial class MainWindow : Window
     {
-        int day = 6;
+        int day = 7;
         public MainWindow()
         {
             InitializeComponent();
@@ -58,6 +58,30 @@ namespace Advent2016
                         Day6 day6 = new Day6(input.Text);
                         output.Text = day6.Result();
                         break;
+                    case 7:
+                        Day7 day7 = new Day7(input.Text);
+                        output.Text = day7.Result();
+                        break;
+                    case 8:
+                        Day8 day8 = new Day8(input.Text);
+                        output.Text = day8.Result();
+                        break;
+                    case 9:
+                        Day9 day9 = new Day9(input.Text);
+                        output.Text = day9.Result();
+                        break;
+                    case 10:
+                        Day10 day10 = new Day10(input.Text);
+                        output.Text = day10.Result();
+                        break;
+                    case 11:
+                        Day11 day11 = new Day11(input.Text);
+                        output.Text = day11.Result();
+                        break;
+                    case 12:
+                        Day12 day12 = new Day12(input.Text);
+                        output.Text = day12.Result();
+                        break;
                     default:
                         output.Text = "oops, no day choosen";
                         break;
@@ -94,6 +118,36 @@ namespace Advent2016
         private void onClick6(object sender, RoutedEventArgs e)
         {
             day = 6;
+            ValdDag.Content = day.ToString();
+        }
+        private void onClick7(object sender, RoutedEventArgs e)
+        {
+            day = 7;
+            ValdDag.Content = day.ToString();
+        }
+        private void onClick8(object sender, RoutedEventArgs e)
+        {
+            day = 8;
+            ValdDag.Content = day.ToString();
+        }
+        private void onClick9(object sender, RoutedEventArgs e)
+        {
+            day = 9;
+            ValdDag.Content = day.ToString();
+        }
+        private void onClick10(object sender, RoutedEventArgs e)
+        {
+            day = 10;
+            ValdDag.Content = day.ToString();
+        }
+        private void onClick11(object sender, RoutedEventArgs e)
+        {
+            day = 11;
+            ValdDag.Content = day.ToString();
+        }
+        private void onClick12(object sender, RoutedEventArgs e)
+        {
+            day = 12;
             ValdDag.Content = day.ToString();
         }
     }
