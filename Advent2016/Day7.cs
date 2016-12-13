@@ -23,10 +23,15 @@ namespace Advent2016
         internal string Result()
         {
             int i = 0;
+            int i2 = 0;
             foreach (Adress a in Adresses)
+            {
                 if (a.isValid())
                     i++;
-            return i.ToString();
+                if (a.isValid2())
+                    i2++;
+            }
+            return "del 1 blir: " + i.ToString()+ " del 2 blir: " + i2.ToString();
         }
     }
 }
