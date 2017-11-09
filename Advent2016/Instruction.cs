@@ -10,17 +10,32 @@ namespace Advent2016
     {
         int bot;
         int low;
+        bool lowIsBot;
         int high;
+        bool highIsBot;
         bool active = true;
-        public Instruction(int _bot, int _low, int _high)
+        public Instruction(string s)
         {
-            bot = _bot;
-            low = _low;
-            high = _high;
+            string[] Words;
+            Words = s.Split(' ');
+            //    Int32.Parse(Words[1]), Int32.Parse(Words[6]), Int32.Parse(Words[11])
+            bot = Int32.Parse(Words[1]);
+            low = Int32.Parse(Words[6]);
+            lowIsBot = Words[5] == "bot";
+            high = Int32.Parse(Words[11]);
+            highIsBot = Words[10] == "bot";
         }
         public int giveBot()
         {
             return bot;
+        }
+        public bool isLowBot()
+        {
+            return lowIsBot;
+        }
+        public bool isHighBot()
+        {
+            return highIsBot;
         }
         public int giveLow()
         {

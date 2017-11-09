@@ -14,6 +14,8 @@ namespace Advent2016
         private List<Instruction> InstructionsObjects = new List<Instruction>();
         public Dictionary<int, Bot> Bots = new Dictionary<int, Bot>();
         int Answere = -1;
+        int Answere2;
+        public Dictionary<int, int> Outputs = new Dictionary<int, int>();
         
         public Day10(string input)
         {
@@ -42,10 +44,12 @@ namespace Advent2016
                 }
                 else
                     if (s != "")
-                        InstructionsObjects.Add(new Instruction(Int32.Parse(Words[1]), Int32.Parse(Words[6]), Int32.Parse(Words[11])));
+                        InstructionsObjects.Add(new Instruction(s));
             }
-            while (Answere < 0)
+            bool whileThis = true;
+            while (whileThis)
             {
+                whileThis = false;
                 foreach (Instruction i in InstructionsObjects)
                 {
                     if (i.isActive())
@@ -56,15 +60,23 @@ namespace Advent2016
                             if (Bots[botIndex].isThisIt())
                             {
                                 Answere = botIndex;
-                                break;
                             }
-                            Bots[i.giveLow()].reciveValue(Bots[botIndex].giveLow());
-                            Bots[i.giveHigh()].reciveValue(Bots[botIndex].giveHigh());
+                            if (i.isLowBot())
+                                Bots[i.giveLow()].reciveValue(Bots[botIndex].giveLow());
+                            else
+                                Outputs[i.giveLow()] = Bots[botIndex].giveLow();
+                            if (i.isHighBot())
+                                Bots[i.giveHigh()].reciveValue(Bots[botIndex].giveHigh());
+                            else
+                                Outputs[i.giveHigh()] = Bots[botIndex].giveHigh(); ;
                         }
+                        else
+                            whileThis = true;
                     }
                 }
             }
-        return Answere.ToString();
+            Answere2 = Outputs[0] * Outputs[1] * Outputs[2];
+        return Answere.ToString() + " och " + Answere2.ToString();
         }
     }
 }
