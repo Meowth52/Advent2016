@@ -66,6 +66,7 @@
     <Compile Include="Day7.cs" />
     <Compile Include="Day8.cs" />
     <Compile Include="Day9.cs" />
+    <Compile Include="Instruction.cs" />
     <Compile Include="Room.cs" />
     <Compile Include="schmenum.cs" />
     <Compile Include="Stub.cs" />
