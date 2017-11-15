@@ -8,5 +8,12 @@ namespace Advent2016
 {
     class Component
     {
+        string Type;
+        string Element;
+        public Component(string type, string element)
+        {
+            Type = type;
+            Element = element;
+        }
     }
 }

@@ -57,6 +57,7 @@
     </ApplicationDefinition>
     <Compile Include="Adress.cs" />
     <Compile Include="Bot.cs" />
+    <Compile Include="Component.cs" />
     <Compile Include="Day10.cs" />
     <Compile Include="Day11.cs" />
     <Compile Include="Day12.cs" />
