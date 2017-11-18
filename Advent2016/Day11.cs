@@ -11,15 +11,27 @@ namespace Advent2016
     {
         private string Input;
         private string[] Instructions;
-        List<Component> Floor1 = new List<Component>();
-        List<Component> Floor2 = new List<Component>();
-        List<Component> Floor3 = new List<Component>();
-        List<Component> Floor4 = new List<Component>();
-
+        public List<Component>[] Floors = { new  List<Component>(), new List<Component>(), new List<Component>(), new List<Component>()};
+        int FloorCounter=0;
         public Day11(string input)
-        {
+                {
             Input = input.Replace("\r\n", "_");
             Instructions = Input.Split('_');
+            foreach(string s in Instructions)
+            {
+                FloorCounter++;
+                string[] Words;
+                Words = s.Split(' ');
+                string Lastword = "";
+                foreach (string word in Words)
+                {
+                    if (word = "generator")
+
+                    Lastword = word;
+                }
+                Regex theMatch = new Regex(@"(\d+)\D+(\d+)");
+            }
+            Floors[1].Add();
 
         }
 

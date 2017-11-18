@@ -16,7 +16,6 @@ namespace Advent2016
         int Answere = -1;
         int Answere2;
         public Dictionary<int, int> Outputs = new Dictionary<int, int>();
-        
         public Day10(string input)
         {
             Input = input.Replace("\r\n", "_");
