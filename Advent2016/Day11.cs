@@ -37,23 +37,30 @@ namespace Advent2016
         internal string Result()
         {
             int StepCounter = 0;
-            FloorCounter = 0;
-            List<Component> FloorCopy = new List<Component>();
+            FloorCounter = 1;
+            List<Component> Elevator = new List<Component>();
+            int ElevatorDirection;
             while (Floors[1].Any() || Floors[2].Any() || Floors[3].Any())
             {
-                FloorCopy.Clear();
-                FloorCounter++;
+                StepCounter++;
+                ElevatorDirection = 0;
                 if (FloorCounter >= 4)
                     FloorCounter = 1;
                 foreach(Component c in Floors[FloorCounter])
                 {
-                    FloorCopy.Add(c);
+                    if (Elevator.Count() <= 2)
+                    {
+                        Elevator.Add(c);
+                        ElevatorDirection = 1;
+                    }
                 }
-                foreach(Component c in FloorCopy)
+                foreach(Component c in Elevator)
                 {
                     Floors[FloorCounter].Remove(c);
-                    Floors[FloorCounter + 1].Add(c);
+                    Floors[FloorCounter + ElevatorDirection].Add(c);
                 }
+                FloorCounter = FloorCounter + ElevatorDirection;
+                Elevator.Clear();
 
             }
             return StepCounter.ToString();
