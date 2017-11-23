@@ -48,31 +48,48 @@ namespace Advent2016
                 foreach (Component c in Floors[FloorCounter])
                 {
                     TranferePossible = false;
-                    if (Elevator.Count() <= 2 && c.Type == "microchip" && FloorCounter < 4)
+                    if (Elevator.Count() < 2 && c.Type == "microchip" && FloorCounter < 4)
                     {
-                        foreach(Component cee in Floors[FloorCounter + 1])
-                            if (cee.Element == c.Element)
-                                TranferePossible = true;
-                        if (!TranferePossible)
-                            foreach (Component cee in Floors[FloorCounter])
-                                if (cee.Type == "generator" && cee.Element == c.Element)
-                                    TranferePossible = true;
-                        if (TranferePossible)
+                        foreach (Component cee in Floors[FloorCounter])
+                            if (cee.Type == "generator" && cee.Element == c.Element)
+                            {
+                                Elevator.Add(c);
+                                Elevator.Add(cee);
+                                ElevatorDirection = 1;
+                            }
+                        if (Elevator.Count() < 2)
                         {
-                            Elevator.Add(c);
-                            ElevatorDirection = 1;
+                            if (!Floors[FloorCounter + 1].Any())
+                                TranferePossible = true;
+                            else
+                                foreach (Component cee in Floors[FloorCounter + 1])
+                                    if (cee.Element == c.Element)
+                                        TranferePossible = true;
+                            if (TranferePossible)
+                            {
+                                Elevator.Add(c);
+                                ElevatorDirection = 1;
+                            }
                         }
                     }
                 }
-                foreach (Component c in Floors[FloorCounter])
+                //foreach (Component c in Floors[FloorCounter])
+                //{
+                //    if (Elevator.Count() == 1 && c.Type == "generator")
+                //    {
+                //        if (Elevator.First().Element == c.Element)
+                //        {
+                //            Elevator.Add(c);
+                //            ElevatorDirection = 1;
+                //        }
+                //    }
+                //}
+                if (Elevator.Count == 1 && FloorCounter > 1)
                 {
-                    if (Elevator.Count() == 1 && c.Type == "generator")
+                    for(int i = 1; i <= FloorCounter; i++)
                     {
-                        if (Elevator.First().Element == c.Element)
-                        {
-                            Elevator.Add(c);
-                            ElevatorDirection = 1;
-                        }
+                        if (Floors[i].Any())
+                            ElevatorDirection = -1;
                     }
                 }
                 if (!Elevator.Any() && FloorCounter >1)
@@ -81,12 +98,13 @@ namespace Advent2016
                     {
                         if (!Elevator.Any() && c.Type == "microchip")
                         {
-                            TranferePossible = false;
+                            TranferePossible = true;
                             foreach (Component cee in Floors[FloorCounter - 1])
-                                if (c.Element == cee.Element)
-                                    TranferePossible =true;
-                            if (!Floors[FloorCounter - 1].Any())
-                                TranferePossible = true;
+                                if (cee.Type == "generator")
+                                    TranferePossible = false;
+                            foreach (Component cee in Floors[FloorCounter - 1])
+                                if (c.Element != cee.Element)
+                                    TranferePossible = true;
                             if (TranferePossible)
                             {
                                 Elevator.Add(c);
@@ -106,7 +124,6 @@ namespace Advent2016
                 }
                 FloorCounter = FloorCounter + ElevatorDirection;
                 Elevator.Clear();
-
             }
             return StepCounter.ToString();
         }
