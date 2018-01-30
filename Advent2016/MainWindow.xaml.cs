@@ -20,7 +20,7 @@ namespace Advent2016
     /// </summary>
     public partial class MainWindow : Window
     {
-        int day = 8;
+        int day = 13;
         public MainWindow()
         {
             InitializeComponent();
@@ -81,6 +81,58 @@ namespace Advent2016
                     case 12:
                         Day12 day12 = new Day12(input.Text);
                         output.Text = day12.Result();
+                        break;
+                    case 13:
+                        Day13 day13 = new Day13(input.Text);
+                        output.Text = day13.Result();
+                        break;
+                    case 14:
+                        Day14 day14 = new Day14(input.Text);
+                        output.Text = day14.Result();
+                        break;
+                    case 15:
+                        Day15 day15 = new Day15(input.Text);
+                        output.Text = day15.Result();
+                        break;
+                    case 16:
+                        Day16 day16 = new Day16(input.Text);
+                        output.Text = day16.Result();
+                        break;
+                    case 17:
+                        Day17 day17 = new Day17(input.Text);
+                        output.Text = day17.Result();
+                        break;
+                    case 18:
+                        Day18 day18 = new Day18(input.Text);
+                        output.Text = day18.Result();
+                        break;
+                    case 19:
+                        Day19 day19 = new Day19(input.Text);
+                        output.Text = day19.Result();
+                        break;
+                    case 20:
+                        Day20 day20 = new Day20(input.Text);
+                        output.Text = day20.Result();
+                        break;
+                    case 21:
+                        Day21 day21 = new Day21(input.Text);
+                        output.Text = day21.Result();
+                        break;
+                    case 22:
+                        Day22 day22 = new Day22(input.Text);
+                        output.Text = day22.Result();
+                        break;
+                    case 23:
+                        Day23 day23 = new Day23(input.Text);
+                        output.Text = day23.Result();
+                        break;
+                    case 24:
+                        Day24 day24 = new Day24(input.Text);
+                        output.Text = day24.Result();
+                        break;
+                    case 25:
+                        Day25 day25 = new Day25(input.Text);
+                        output.Text = day25.Result();
                         break;
                     default:
                         output.Text = "oops, no day choosen";
