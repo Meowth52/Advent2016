@@ -16,6 +16,7 @@ namespace Advent2016
             stopWatch.Start();
             Input = input.Replace("\r\n", "");
             Int32.TryParse(Input, out FavoriteNumber);
+            //building the grid
             for (int x = 0; x < 50; x++)
             {
                 for (int y = 0; y < 50; y++)
@@ -51,12 +52,12 @@ namespace Advent2016
                 Dictionary<int, Coordinate> IteratingList = new Dictionary<int, Coordinate>(CurrentPosition);
                 foreach (KeyValuePair<int,Coordinate> c in IteratingList)
                 {
-                    bool IsDeadEnd = true;
                     foreach (Coordinate d in AllAdjantDirections)
                     {
                         TestCoordinate = c.Value.GetSum(d);
                         if (TestCoordinate.compare(TargetPosition))
                             Quit = true;
+                        //is this side a valid square?
                         if (TestCoordinate.x >= 0 && TestCoordinate.x < 50 && TestCoordinate.y >= 0 && TestCoordinate.y < 50 && !TheGrid[TestCoordinate.x, TestCoordinate.y])
                         {
                             if (StepCounter<=50)
@@ -64,14 +65,12 @@ namespace Advent2016
                             NextInt++;
                             CurrentPosition.Add(NextInt, TestCoordinate);
                             TheGrid[TestCoordinate.x, TestCoordinate.y] = true;
-                            IsDeadEnd = false;
                         }
                     }
                     CurrentPosition.Remove(c.Key);
-                    
                 }
             }
-            //del 2
+            //This is just some visuals
             StringBuilder sBuilder = new StringBuilder();
             for (int x = 0; x < 50; x++)
             {
@@ -88,6 +87,7 @@ namespace Advent2016
             TimeSpan ts = stopWatch.Elapsed;
             return "Del 1: " + Sum + " och del 2: " + Sum2 + " Executed in " + ts.TotalMilliseconds.ToString() + " ms" + "\r\n" + sBuilder.ToString();
         }
+        //this is from stack overflow. It returns the number of set bits
         int NumberOfSetBits(int i)
         {
             i = i - ((i >> 1) & 0x55555555);
