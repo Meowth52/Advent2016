@@ -7,9 +7,9 @@ namespace Advent2016
     {
         private string Input;
         private string[] strings;
-        private coordinate position = new coordinate(0, 0); 
+        private Coordinate position = new Coordinate(0, 0); 
         private int direction = 0;
-        private List<coordinate> positions = new List<coordinate>();
+        private List<Coordinate> positions = new List<Coordinate>();
 
         public Day1(string input)
         {
@@ -43,28 +43,28 @@ namespace Advent2016
                         for (int i = 1; i <= blocks; i++)
                         {
                             position.x = position.x + 1;
-                            positions.Add(new coordinate(position.x, position.y));
+                            positions.Add(new Coordinate(position.x, position.y));
                         }
                         break;
                     case 1:
                         for (int i = 1; i <= blocks; i++)
                         {
                             position.y = position.y - 1;
-                            positions.Add(new coordinate(position.x, position.y));
+                            positions.Add(new Coordinate(position.x, position.y));
                         }
                         break;
                     case 2:
                         for (int i = 1; i <= blocks; i++)
                         {
                             position.x = position.x - 1;
-                            positions.Add(new coordinate(position.x, position.y));
+                            positions.Add(new Coordinate(position.x, position.y));
                         }
                         break;
                     case 3:
                         for (int i = 1; i <= blocks; i++)
                         {
                             position.y = position.y + 1;
-                            positions.Add(new coordinate(position.x, position.y));
+                            positions.Add(new Coordinate(position.x, position.y));
                         }
                         break;
                     default:
@@ -72,9 +72,9 @@ namespace Advent2016
                 }
 
             }
-            List<coordinate> tempList = new List<coordinate>();
-            coordinate intersection = new coordinate(0,0);
-            foreach (coordinate i in positions)
+            List<Coordinate> tempList = new List<Coordinate>();
+            Coordinate intersection = new Coordinate(0,0);
+            foreach (Coordinate i in positions)
             {
                 if (tempList.Exists(x=> x.compare(i)))
                 {

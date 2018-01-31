@@ -31,6 +31,47 @@ namespace Advent2016
         {
             int Sum = 0;
             int Sum2 = 0;
+            Dictionary<int, Coordinate> CurrentPosition = new Dictionary<int, Coordinate>();
+            CurrentPosition.Add(1, new Coordinate(1, 1));
+            Coordinate LastPosition = new Coordinate(1,1);
+            Coordinate TargetPosition = new Coordinate(31,39);
+            List<Coordinate> AllAdjantDirections = new List<Coordinate>();
+            AllAdjantDirections.Add(new Coordinate(1, 0));
+            AllAdjantDirections.Add(new Coordinate(0, 1));
+            AllAdjantDirections.Add(new Coordinate(0, -1));
+            AllAdjantDirections.Add(new Coordinate(-1, 0));
+            Coordinate TestCoordinate;
+            int NextInt = 1;
+            bool Quit = false;
+            int StepCounter = 0;
+            while (!Quit)
+            {
+                StepCounter++;
+                Sum++;
+                Dictionary<int, Coordinate> IteratingList = new Dictionary<int, Coordinate>(CurrentPosition);
+                foreach (KeyValuePair<int,Coordinate> c in IteratingList)
+                {
+                    bool IsDeadEnd = true;
+                    foreach (Coordinate d in AllAdjantDirections)
+                    {
+                        TestCoordinate = c.Value.GetSum(d);
+                        if (TestCoordinate.compare(TargetPosition))
+                            Quit = true;
+                        if (TestCoordinate.x >= 0 && TestCoordinate.x < 50 && TestCoordinate.y >= 0 && TestCoordinate.y < 50 && !TheGrid[TestCoordinate.x, TestCoordinate.y])
+                        {
+                            if (StepCounter<=50)
+                                Sum2++;
+                            NextInt++;
+                            CurrentPosition.Add(NextInt, TestCoordinate);
+                            TheGrid[TestCoordinate.x, TestCoordinate.y] = true;
+                            IsDeadEnd = false;
+                        }
+                    }
+                    CurrentPosition.Remove(c.Key);
+                    
+                }
+            }
+            //del 2
             StringBuilder sBuilder = new StringBuilder();
             for (int x = 0; x < 50; x++)
             {
