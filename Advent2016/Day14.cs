@@ -39,16 +39,16 @@ namespace Advent2016
                     HexString.Append(byteData[i].ToString("x2"));
                 }
                 TestString = HexString.ToString();
+                foreach (KeyValuePair<int, string> s in FrippleTestContenders)
+                {
+                    if (TestString.Contains(s.Value))
+                    {
+                        KeyContenders.Add(s.Key, s.Value);
+                        RemoveKeys.Add(s.Key);
+                    }
+                }
                 if (EndCounter == 0)
                 {
-                    foreach (KeyValuePair<int, string> s in FrippleTestContenders)
-                    {
-                        if (TestString.Contains(s.Value))
-                        {
-                            KeyContenders.Add(s.Key, s.Value);
-                            RemoveKeys.Add(s.Key);
-                        }
-                    }
                     char LastChar = 'x';
                     char EvenLasterChar = 'y';
                     foreach (char c in TestString)
@@ -102,16 +102,16 @@ namespace Advent2016
                     Hashstring = HexString.ToString();
                 }
                 TestString = Hashstring;
+                foreach (KeyValuePair<int, string> s in FrippleTestContenders)
+                {
+                    if (TestString.Contains(s.Value))
+                    {
+                        KeyContenders.Add(s.Key, s.Value);
+                        RemoveKeys.Add(s.Key);
+                    }
+                }
                 if (EndCounter == 0)
                 {
-                    foreach (KeyValuePair<int, string> s in FrippleTestContenders)
-                    {
-                        if (TestString.Contains(s.Value))
-                        {
-                            KeyContenders.Add(s.Key, s.Value);
-                            RemoveKeys.Add(s.Key);
-                        }
-                    }
                     char LastChar = 'x';
                     char EvenLasterChar = 'y';
                     foreach (char c in TestString)
