@@ -41,6 +41,14 @@ namespace Advent2016
                 TestString = HexString.ToString();
                 if (EndCounter == 0)
                 {
+                    foreach (KeyValuePair<int, string> s in FrippleTestContenders)
+                    {
+                        if (TestString.Contains(s.Value))
+                        {
+                            KeyContenders.Add(s.Key, s.Value);
+                            RemoveKeys.Add(s.Key);
+                        }
+                    }
                     char LastChar = 'x';
                     char EvenLasterChar = 'y';
                     foreach (char c in TestString)
@@ -55,14 +63,6 @@ namespace Advent2016
                     }
                 }
                 FrippleTestContenders.Remove(Iterator-1000);
-                foreach (KeyValuePair<int, string> s in FrippleTestContenders)
-                {
-                    if (TestString.Contains(s.Value))
-                    {
-                        KeyContenders.Add(s.Key, s.Value);
-                        RemoveKeys.Add(s.Key);
-                    }
-                }
                 foreach(int i in RemoveKeys)
                 {
                     FrippleTestContenders.Remove(i);
@@ -81,9 +81,75 @@ namespace Advent2016
             }
             ResultIndex.Sort();
             Sum = ResultIndex[63];
+            // del 2
+            Iterator = 0;
+            EndCounter = 0;
+            FrippleTestContenders.Clear();
+            KeyContenders.Clear();
+            while (true)
+            {
+                HexString.Clear();
+                string Hashstring = Salt + Iterator.ToString();
+                for (int i = 0; i <= 2016; i++)
+                {
+                    byteData = hashis.ComputeHash(Encoding.UTF8.GetBytes(Hashstring));
+                    HexString.Clear();
+                    int ByteLenght = byteData.Length;
+                    for (int bi = 0; bi < byteData.Length; bi++)
+                    {
+                        HexString.Append(byteData[bi].ToString("x2"));
+                    }
+                    Hashstring = HexString.ToString();
+                }
+                TestString = Hashstring;
+                if (EndCounter == 0)
+                {
+                    foreach (KeyValuePair<int, string> s in FrippleTestContenders)
+                    {
+                        if (TestString.Contains(s.Value))
+                        {
+                            KeyContenders.Add(s.Key, s.Value);
+                            RemoveKeys.Add(s.Key);
+                        }
+                    }
+                    char LastChar = 'x';
+                    char EvenLasterChar = 'y';
+                    foreach (char c in TestString)
+                    {
+                        if (c == LastChar && c == EvenLasterChar)
+                        {
+                            FrippleTestContenders.Add(Iterator, c.ToString() + c + c + c + c);
+                            break;
+                        }
+                        EvenLasterChar = LastChar;
+                        LastChar = c;
+                    }
+                }
+                FrippleTestContenders.Remove(Iterator - 1000);
+                foreach (int i in RemoveKeys)
+                {
+                    FrippleTestContenders.Remove(i);
+                }
+                RemoveKeys.Clear();
+                if (KeyContenders.Count >= 64)
+                    EndCounter++;
+                if (EndCounter >= 1000)
+                    break;
+                Iterator++;
+            }
+            ResultIndex.Clear();
+            foreach (KeyValuePair<int, string> k in KeyContenders)
+            {
+                ResultIndex.Add(k.Key);
+            }
+            ResultIndex.Sort();
+            Sum2 = ResultIndex[63];
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;
-            return "Del 1: " + Sum + " och del 2: " + Sum2 + " Executed in " + ts.TotalMilliseconds.ToString() + " ms";
+            //HexString.Clear();
+            //foreach (int r in ResultIndex)
+            //    HexString.Append( r.ToString() + ", " + KeyContenders[r] + "\r\n");
+            return  "Del 1: " + Sum + " och del 2: " + Sum2 + " Executed in " + ts.TotalMilliseconds.ToString() + " ms";
         }
     }
 }
