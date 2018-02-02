@@ -55,7 +55,7 @@ namespace Advent2016
                     foreach (Coordinate d in AllAdjantDirections)
                     {
                         TestCoordinate = c.Value.GetSum(d);
-                        if (TestCoordinate.compare(TargetPosition))
+                        if (TestCoordinate.IsOn(TargetPosition))
                             Quit = true;
                         //is this side a valid square?
                         if (TestCoordinate.x >= 0 && TestCoordinate.x < 50 && TestCoordinate.y >= 0 && TestCoordinate.y < 50 && !TheGrid[TestCoordinate.x, TestCoordinate.y])

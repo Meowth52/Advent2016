@@ -9,7 +9,7 @@
             this.x = x;
             this.y = y;
         }
-        public bool compare(Coordinate c)
+        public bool IsOn(Coordinate c)
         {
             return(c.x==this.x && c.y==this.y);
         }
@@ -23,6 +23,10 @@
             int x2 = x + A.x;
             int y2 = y + A.y;
             return new Coordinate(x2, y2);
+        }
+        public bool IsInPositiveBounds(int x2, int y2)
+        {
+            return (x >= 0 && y >= 0 && x <= x2 && y <= y2);
         }
     }
 }

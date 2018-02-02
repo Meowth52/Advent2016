@@ -76,7 +76,7 @@ namespace Advent2016
             Coordinate intersection = new Coordinate(0,0);
             foreach (Coordinate i in positions)
             {
-                if (tempList.Exists(x=> x.compare(i)))
+                if (tempList.Exists(x=> x.IsOn(i)))
                 {
                     intersection = i;
                     break;
