@@ -62,6 +62,8 @@ namespace Advent2016
                     }
                     foreach(char c in f[FloorCounter])
                     {
+                        c.ToString().
+                        // om det finns en generator och inte ens egen finns
                         //the test cant just match. one of the components can be alone. Not sure lowercase will cut it
                         if (FloorCounter > 1 && f[FloorCounter - 1].ToLower().Contains(c.ToString().ToLower()))
                         {
