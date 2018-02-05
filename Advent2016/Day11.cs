@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
 using System.Collections;
+using System.Linq;
 
 namespace Advent2016
 {
@@ -14,6 +15,8 @@ namespace Advent2016
         private string[] Instructions;
         public List<Dictionary<int, string>> FloorStates = new List<Dictionary<int, string>>();
         public List<Dictionary<int, string>> NextFloorsStates = new List<Dictionary<int, string>>();
+        public List<Dictionary<int, string>> NexterFloorsStates = new List<Dictionary<int, string>>();
+        Dictionary<int, string> Next;
         int NumberOfComponents = 0;
         int FloorCounter=0;
         public Day11(string input)
@@ -26,6 +29,7 @@ namespace Advent2016
             FloorStates[0].Add(2, "");
             FloorStates[0].Add(3, "");
             FloorStates[0].Add(4, "");
+            FloorStates[0].Add(0, "1");
             foreach (string s in Instructions)
             {
                 FloorCounter++;
@@ -58,29 +62,73 @@ namespace Advent2016
                     if (f[4].Length >= NumberOfComponents)
                     {
                         NotYet = false;
-                        break;
                     }
+                    Int32.TryParse(f[0], out FloorCounter);
                     foreach(char c in f[FloorCounter])
                     {
-                        c.ToString().
-                        // om det finns en generator och inte ens egen finns
-                        //the test cant just match. one of the components can be alone. Not sure lowercase will cut it
-                        if (FloorCounter > 1 && f[FloorCounter - 1].ToLower().Contains(c.ToString().ToLower()))
+                        foreach(char d in f[FloorCounter])
                         {
-                            //create and add the new state
-                            Dictionary<int, string> Next = new Dictionary<int, string>(f);
-                            Next[FloorCounter].Remove
-                            NextFloorsStates.Add(new Dictionary<int, string>(f));
-                            NextFloorsStates.
-                        }                            
-                        if (FloorCounter < 4 && f[FloorCounter + 1].ToLower().Contains(c.ToString().ToLower()))
+                            NexterFloorsStates.Clear();
+                            if (FloorCounter > 1 && c!=d)
+                            {
+                                Next = new Dictionary<int, string>(f);
+                                Next[FloorCounter]= Next[FloorCounter].Replace(c.ToString(), "");
+                                Next[FloorCounter - 1] += c.ToString();
+                                Next[0] = (FloorCounter-1).ToString();
+                                NextFloorsStates.Add(Next);
+                                Next = new Dictionary<int, string>(f);
+                                Next[FloorCounter] = Next[FloorCounter].Replace(c.ToString(), "");
+                                Next[FloorCounter] = Next[FloorCounter].Replace(d.ToString(), "");
+                                Next[FloorCounter - 1] += c.ToString() + d.ToString();
+                                Next[0] = (FloorCounter - 1).ToString();
+                                NextFloorsStates.Add(Next);
+                                Next = new Dictionary<int, string>(f);
+                                Next[FloorCounter] = Next[FloorCounter].Replace(c.ToString(), "");
+                                Next[FloorCounter] = Next[FloorCounter].Replace(d.ToString(), "");
+                                Next[FloorCounter - 1] += d.ToString() + c.ToString();
+                                Next[0] = (FloorCounter - 1).ToString();
+                                NextFloorsStates.Add(Next);
+                            }
+                            if (FloorCounter < 4 && c!=d)
+                            {
+                                Next = new Dictionary<int, string>(f);
+                                Next[FloorCounter] = Next[FloorCounter].Replace(c.ToString(), "");
+                                Next[FloorCounter + 1] += c.ToString();
+                                Next[0] = (FloorCounter + 1).ToString();
+                                NextFloorsStates.Add(Next);
+                                Next = new Dictionary<int, string>(f);
+                                Next[FloorCounter] = Next[FloorCounter].Replace(c.ToString(), "");
+                                Next[FloorCounter] = Next[FloorCounter].Replace(d.ToString(), "");
+                                Next[FloorCounter + 1] += c.ToString() + d.ToString();
+                                Next[0] = (FloorCounter + 1).ToString();
+                                NextFloorsStates.Add(Next);
+                                Next = new Dictionary<int, string>(f);
+                                Next[FloorCounter] = Next[FloorCounter].Replace(c.ToString(), "");
+                                Next[FloorCounter] = Next[FloorCounter].Replace(d.ToString(), "");
+                                Next[FloorCounter + 1] += d.ToString() + c.ToString();
+                                Next[0] = (FloorCounter + 1).ToString();
+                                NextFloorsStates.Add(Next);
+                            }
+                        }
+                        foreach (Dictionary<int,string> d in NextFloorsStates)
                         {
-
-                        }                            
-
+                            bool isOK = true;
+                            foreach (KeyValuePair<int, string> k in d)
+                            {
+                                foreach (char p in k.Value)
+                                {
+                                    if (k.Value.Any(char.IsUpper) && char.IsLower(p) &! k.Value.Contains(p.ToString().ToUpper()))
+                                        isOK = false;
+                                }
+                            }
+                            if (isOK)
+                                NexterFloorsStates.Add(d);
+                        }
+                        NextFloorsStates.Clear();
                     }
                 }
-
+                FloorStates = new List<Dictionary<int, string>>(NexterFloorsStates);
+                NexterFloorsStates.Clear();
             }
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;
