@@ -18,7 +18,7 @@ namespace Advent2016
         public List<Dictionary<int, string>> NexterFloorsStates = new List<Dictionary<int, string>>();
         Dictionary<int, string> Next;
         int NumberOfComponents = 0;
-        int FloorCounter=0;
+        int FloorCounter = 0;
         public Day11(string input)
         {
             stopWatch.Start();
@@ -46,6 +46,8 @@ namespace Advent2016
                     NumberOfComponents++;
                 }
             }
+            FloorStates[0][1] += "eEdD";
+            NumberOfComponents+=4;
         }
 
         internal string Result()
@@ -54,28 +56,40 @@ namespace Advent2016
             int Sum2 = 0;
             FloorCounter = 1;
             bool NotYet = true;
-            while(NotYet)
+            List<string> VisitedStates = new List<string>();
+            while (NotYet)
             {
-                Sum++;
-                foreach(Dictionary<int, string> f in FloorStates)
+                foreach (Dictionary<int, string> f in FloorStates)
                 {
                     if (f[4].Length >= NumberOfComponents)
                     {
                         NotYet = false;
+                        Sum--;
                     }
+                    
                     Int32.TryParse(f[0], out FloorCounter);
-                    foreach(char c in f[FloorCounter])
+                    foreach (char c in f[FloorCounter])
                     {
-                        foreach(char d in f[FloorCounter])
+                        foreach (char d in f[FloorCounter])
                         {
-                            NexterFloorsStates.Clear();
-                            if (FloorCounter > 1 && c!=d)
+                            if (FloorCounter > 1 && c == d)
                             {
                                 Next = new Dictionary<int, string>(f);
-                                Next[FloorCounter]= Next[FloorCounter].Replace(c.ToString(), "");
+                                Next[FloorCounter] = Next[FloorCounter].Replace(c.ToString(), "");
                                 Next[FloorCounter - 1] += c.ToString();
-                                Next[0] = (FloorCounter-1).ToString();
+                                Next[0] = (FloorCounter - 1).ToString();
                                 NextFloorsStates.Add(Next);
+                            }
+                            if (FloorCounter < 4 && c == d)
+                            {
+                                Next = new Dictionary<int, string>(f);
+                                Next[FloorCounter] = Next[FloorCounter].Replace(c.ToString(), "");
+                                Next[FloorCounter + 1] += c.ToString();
+                                Next[0] = (FloorCounter + 1).ToString();
+                                NextFloorsStates.Add(Next);
+                            }
+                            if (FloorCounter > 1 && c != d)
+                            {
                                 Next = new Dictionary<int, string>(f);
                                 Next[FloorCounter] = Next[FloorCounter].Replace(c.ToString(), "");
                                 Next[FloorCounter] = Next[FloorCounter].Replace(d.ToString(), "");
@@ -89,13 +103,8 @@ namespace Advent2016
                                 Next[0] = (FloorCounter - 1).ToString();
                                 NextFloorsStates.Add(Next);
                             }
-                            if (FloorCounter < 4 && c!=d)
+                            if (FloorCounter < 4 && c != d)
                             {
-                                Next = new Dictionary<int, string>(f);
-                                Next[FloorCounter] = Next[FloorCounter].Replace(c.ToString(), "");
-                                Next[FloorCounter + 1] += c.ToString();
-                                Next[0] = (FloorCounter + 1).ToString();
-                                NextFloorsStates.Add(Next);
                                 Next = new Dictionary<int, string>(f);
                                 Next[FloorCounter] = Next[FloorCounter].Replace(c.ToString(), "");
                                 Next[FloorCounter] = Next[FloorCounter].Replace(d.ToString(), "");
@@ -110,10 +119,10 @@ namespace Advent2016
                                 NextFloorsStates.Add(Next);
                             }
                         }
-                        foreach (Dictionary<int,string> d in NextFloorsStates)
+                        foreach (Dictionary<int, string> State in NextFloorsStates)
                         {
                             bool isOK = true;
-                            foreach (KeyValuePair<int, string> k in d)
+                            foreach (KeyValuePair<int, string> k in State)
                             {
                                 foreach (char p in k.Value)
                                 {
@@ -122,13 +131,45 @@ namespace Advent2016
                                 }
                             }
                             if (isOK)
-                                NexterFloorsStates.Add(d);
+                            {
+                                string StateChecker = "";
+                                StateChecker += State[0];
+                                for (int i = 1; i < 5; i++)
+                                {
+                                    int NrOfPaired = 0;
+                                    int NrOfUnPaired = 0;
+                                    int NrOfUnpairedMicrochips = 0;
+                                    List<char> Schmring = State[i].ToList();
+                                    Schmring.Sort();
+                                    char Last = '_';
+                                    foreach (char Schmar in Schmring)
+                                    {
+                                        if (char.IsLower(Schmar))
+                                            NrOfUnpairedMicrochips++;
+                                        NrOfUnPaired++;
+                                        if (char.ToLower( Schmar) == char.ToLower( Last))
+                                        {
+                                            NrOfPaired++;
+                                            NrOfUnpairedMicrochips--;
+                                            NrOfUnPaired -= 2;
+                                        }
+                                        Last = Schmar;
+                                    }
+                                    StateChecker += NrOfPaired.ToString() + NrOfUnPaired.ToString() + NrOfUnpairedMicrochips.ToString();
+                                }
+                                if (!VisitedStates.Contains(StateChecker))
+                                {
+                                    NexterFloorsStates.Add(State);
+                                    VisitedStates.Add(StateChecker);
+                                }
+                            }
                         }
                         NextFloorsStates.Clear();
                     }
                 }
                 FloorStates = new List<Dictionary<int, string>>(NexterFloorsStates);
                 NexterFloorsStates.Clear();
+                Sum++;
             }
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;
