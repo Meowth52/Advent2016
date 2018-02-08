@@ -69,6 +69,7 @@ namespace Advent2016
             //Swapping around
             int CurrentElf = 1;
             string DeadElves = "";
+            // Slightly faster brute force that doesnt work.
             //while (NrOfElves2 > 1)
             //{
             //    int middle = NrOfElves2 / 2;
@@ -83,16 +84,24 @@ namespace Advent2016
             //    if (CurrentElf > NrOfElves2)
             //        CurrentElf = 0;
             //}
-            for (int i = 1; i <= NrOfElves2; i++)
+            //Slow brute force that works
+            for (int i = 1; i <= NrOfElves2-1; i++)
             {
-                if (CurrentElf < i/2)
-                    CurrentElf++;
-                else
-                    CurrentElf += 2;
-                if (CurrentElf > i)
-                    CurrentElf = 1;
+                ElvenParty2.RemoveAt(ElvenParty2.Count / 2);
+                ElvenParty2.Add(ElvenParty2[0]);
+                ElvenParty2.RemoveAt(0);
             }
-            Sum2 = CurrentElf;
+            // Fast soulution based on patterns in soulutions
+            //for (int i = 1; i <= NrOfElves2; i++)
+            //{
+            //    if (CurrentElf < i/2)
+            //        CurrentElf++;
+            //    else
+            //        CurrentElf += 2;
+            //    if (CurrentElf > i)
+            //        CurrentElf = 1;
+            //}
+            Sum2 = ElvenParty2[0];
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;
             return DeadElves+"Del 1: " + Sum + " och del 2: " + Sum2 + " Executed in " + ts.TotalMilliseconds.ToString() + " ms";
