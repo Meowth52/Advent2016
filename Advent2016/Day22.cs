@@ -14,6 +14,10 @@ namespace Advent2016
         {
             stopWatch.Start();
             Input = input.Replace("\r\n", "_");
+            for (int i = 0; i < 10; i++)
+            {
+                Input = Input.Replace("  ", " ");
+            }
             Instructions = Input.Split('_');
         }
 
@@ -21,6 +25,14 @@ namespace Advent2016
         {
             int Sum = 0;
             int Sum2 = 0;
+            List<GridNode> GridNodes = new List<GridNode>();
+            foreach (string s in Instructions)
+            {
+                if (s.Contains("/"))
+                {
+                    GridNodes.Add(new GridNode(s));
+                }
+            }
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;
             return "Del 1: " + Sum + " och del 2: " + Sum2 + " Executed in " + ts.TotalMilliseconds.ToString() + " ms";

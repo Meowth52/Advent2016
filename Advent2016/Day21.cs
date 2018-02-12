@@ -110,7 +110,7 @@ namespace Advent2016
             }
             //del 2
             Instructions.Reverse();
-            PasswordInput = "decab";
+            PasswordInput = "fbgdceah";
             Password.Clear();
             foreach (char c in PasswordInput)
             {
@@ -152,14 +152,35 @@ namespace Advent2016
                         break;
                     case "rotatebased":
                         X = Password.IndexOf(s[6][0]);
-                        X++;
-                        for (int i = X; i > X - 1; i--)
+                        int RotationCounter = -1;
+                        switch (X)
                         {
-                            Password.Add(Password[0]);
-                            Password.RemoveAt(0);
+                            case 0:
+                                RotationCounter = 1;
+                                break;
+                            case 1:
+                                RotationCounter = 1;
+                                break;
+                            case 2:
+                                RotationCounter = 6;
+                                break;
+                            case 3:
+                                RotationCounter = 2;
+                                break;
+                            case 4:
+                                RotationCounter = 7;
+                                break;
+                            case 5:
+                                RotationCounter = 3;
+                                break;
+                            case 6:
+                                RotationCounter = 0;
+                                break;
+                            case 7:
+                                RotationCounter = 4;
+                                break;
                         }
-                        X = Password.IndexOf(s[6][0]);
-                        if (X >= 5 || X==0)
+                        for (int i = 0; i < RotationCounter; i++)
                         {
                             Password.Add(Password[0]);
                             Password.RemoveAt(0);
