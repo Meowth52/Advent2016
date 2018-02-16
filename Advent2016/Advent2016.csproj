@@ -83,6 +83,7 @@
     <Compile Include="Day9.cs" />
     <Compile Include="GridNode.cs" />
     <Compile Include="Instruction.cs" />
+    <Compile Include="PathFinder.cs" />
     <Compile Include="Room.cs" />
     <Compile Include="schmenum.cs" />
     <Compile Include="Stub.cs" />

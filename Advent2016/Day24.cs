@@ -35,11 +35,8 @@ namespace Advent2016
                 {new Coordinate(-1, 0) },
                 {new Coordinate(1, 0) }
             };
-            Dictionary<Coordinate, Dictionary<char, Coordinate>> Paths = new Dictionary<Coordinate, Dictionary<char, Coordinate>>();
-            Dictionary<Coordinate, Dictionary<char, Coordinate>> NextPaths = new Dictionary<Coordinate, Dictionary<char, Coordinate>>();
-            List<Coordinate> VisitedPositions = new List<Coordinate>();
-            char RemoveIndex = '_';
-            bool Remove;
+            List<PathFinder> Paths = new List<PathFinder>();
+            List<PathFinder> NextPaths = new List<PathFinder>();
             //Make the grid and collect the targets
             for (int x = 0; x < MaxX; x++)
             {
@@ -57,55 +54,27 @@ namespace Advent2016
                     }
                 }
             }
-            Paths.Add(PlacesToBe['0'], PlacesToBe);
-            Paths[PlacesToBe['0']].Remove('0');
+            Paths.Add(new PathFinder(PlacesToBe));
             bool GetOut = false;
             while (!GetOut)
             {
                 Remove = false;
                 Sum++;
-                foreach (KeyValuePair<Coordinate, Dictionary<char, Coordinate>> p in Paths)
+                foreach (PathFinder p in Paths)
                 {
-                    foreach (KeyValuePair<char, Coordinate> k in p.Value)
-                    {
-                        if (k.Value.IsOn(p.Key))
-                        {
-                            Remove = true;
-                            RemoveIndex = k.Key;
-                            PlacesToBeen = new Dictionary<char, Coordinate>( p.Value);
-                            //This path is now dead
-                            continue;
-                        }
-                    }
-                    if (Remove)
-                    {
-                        continue;
-                    }
+                    if (p.TargetFound())
+                        GetOut = true;
                     foreach (Coordinate d in AllAdjantDirections)
                     {
-                        TestCoordinate = p.Key.GetSum(d);
-                        bool AnotherBloodyTestBool = false;
-                        foreach (Coordinate c in VisitedPositions)
-                            if (c.IsOn(TestCoordinate))
-                                AnotherBloodyTestBool = true;
-                        if (TestCoordinate.IsInPositiveBounds(MaxX-1, MaxY - 1) &! TheGrid[TestCoordinate.x,TestCoordinate.y] &! AnotherBloodyTestBool)
+                        TestCoordinate = p.GetCurrentPosition().GetSum(d);
+                        if (TestCoordinate.IsInPositiveBounds(MaxX-1, MaxY - 1) &! TheGrid[TestCoordinate.x,TestCoordinate.y] &! p.HasVisited(TestCoordinate))
                         {
-                            NextPaths.Add(TestCoordinate, p.Value);
-                            //VisitedPositions.Add(TestCoordinate);
+                            NextPaths.Add(new PathFinder(TestCoordinate, p.getVisitedPositions(), p.getTargets()));
                         }
                     }
                 }
-                Paths = new Dictionary<Coordinate, Dictionary<char, Coordinate>>(NextPaths);
+                Paths = new List<PathFinder>(NextPaths);
                 NextPaths.Clear();
-                if (Remove)
-                {
-                    VisitedPositions.Clear();
-                    Paths.Add(PlacesToBeen[RemoveIndex], PlacesToBeen);
-                    Paths[PlacesToBeen[RemoveIndex]].Remove(RemoveIndex);
-                    foreach (KeyValuePair<Coordinate, Dictionary<char, Coordinate>> p in Paths)
-                        if (p.Value.Count == 0)
-                            GetOut = true;
-                }
             }
             Sum--;
             stopWatch.Stop();
