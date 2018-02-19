@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid Height="320" VerticalAlignment="Bottom">
-        <TextBox x:Name="input" HorizontalAlignment="Left" Height="113" Margin="135,25,0,0" TextWrapping="Wrap" Text="input" VerticalAlignment="Top" Width="251" KeyUp="TextBox_KeyUp" AcceptsReturn="True"/>
+        <TextBox x:Name="input" HorizontalAlignment="Left" Height="113" Margin="135,25,0,0" TextWrapping="Wrap" Text="input" VerticalAlignment="Top" Width="251" KeyUp="TextBox_KeyUp" AcceptsReturn="True" FontFamily="Courier New"/>
         <TextBox x:Name="output" HorizontalAlignment="Left" Height="125" Margin="84,175,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="409" FontFamily="Courier New"/>
         <Label x:Name="ValdDag" Content="Doomdidoom" HorizontalAlignment="Left" Margin="248,-1,0,0" VerticalAlignment="Top"/>
         <Button x:Name="Day1button" Content="Day 1" HorizontalAlignment="Left" Margin="0,-1,0,0" VerticalAlignment="Top" Width="62" Click="onClick1"/>

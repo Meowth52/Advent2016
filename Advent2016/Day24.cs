@@ -27,7 +27,7 @@ namespace Advent2016
             bool[,] TheGrid = new bool[MaxX, MaxY];
             Coordinate TestCoordinate;
             Dictionary<char, Coordinate> PlacesToBe = new Dictionary<char, Coordinate>();
-            Dictionary<char, Coordinate> PlacesToBeen = new Dictionary<char, Coordinate>();
+            Dictionary<char, Coordinate> PlacesToBePart2 = new Dictionary<char, Coordinate>();
             List<Coordinate> AllAdjantDirections = new List<Coordinate>
             {
                 {new Coordinate(0, 1) },
@@ -54,22 +54,44 @@ namespace Advent2016
                     }
                 }
             }
+            PlacesToBePart2.Add('1', PlacesToBe['0']);
             Paths.Add(new PathFinder(PlacesToBe));
+            HashSet<string> PathDigests = new HashSet<string>();
+            bool IsCrossing = true;
+            int DirectionCounter;
+            PathFinder Digesting;
             bool GetOut = false;
             while (!GetOut)
             {
-                Remove = false;
                 Sum++;
                 foreach (PathFinder p in Paths)
                 {
                     if (p.TargetFound())
+                    {
                         GetOut = true;
+                        //PlacesToBePart2.Add('0', p.GetCurrentPosition());
+                        break;
+                    }
+                    DirectionCounter = 0;
                     foreach (Coordinate d in AllAdjantDirections)
                     {
                         TestCoordinate = p.GetCurrentPosition().GetSum(d);
-                        if (TestCoordinate.IsInPositiveBounds(MaxX-1, MaxY - 1) &! TheGrid[TestCoordinate.x,TestCoordinate.y] &! p.HasVisited(TestCoordinate))
+                        if (!TheGrid[TestCoordinate.x, TestCoordinate.y])
+                            DirectionCounter++;
+                        IsCrossing = DirectionCounter > 2;
+                    }
+                    foreach (Coordinate d in AllAdjantDirections)
+                    {
+                        TestCoordinate = p.GetCurrentPosition().GetSum(d);
+                        if (TestCoordinate.IsInPositiveBounds(MaxX - 1, MaxY - 1) & !TheGrid[TestCoordinate.x, TestCoordinate.y] & !p.HasVisited(TestCoordinate))
                         {
-                            NextPaths.Add(new PathFinder(TestCoordinate, p.getVisitedPositions(), p.getTargets()));
+                            Digesting = new PathFinder(TestCoordinate, p.getVisitedPositions(), p.getTargets(), p.FoundOnce);
+                            if (p.FoundOnce || !PathDigests.Contains(Digesting.MakePathDigest()))
+                            {
+                                NextPaths.Add(new PathFinder(TestCoordinate, p.getVisitedPositions(), p.getTargets(),p.FoundOnce));
+                                if (IsCrossing &! p.FoundOnce)
+                                    PathDigests.Add(Digesting.MakePathDigest());                                
+                            }
                         }
                     }
                 }
@@ -77,6 +99,48 @@ namespace Advent2016
                 NextPaths.Clear();
             }
             Sum--;
+            //GetOut = false;
+            //Paths.Clear();
+            //Paths.Add(new PathFinder(PlacesToBePart2));
+            //PathDigests.Clear();
+            //Sum2 = Sum;
+            //while (!GetOut)
+            //{
+            //    Sum2++;
+            //    foreach (PathFinder p in Paths)
+            //    {
+            //        if (p.TargetFound())
+            //        {
+            //            GetOut = true;
+            //            break;
+            //        }
+            //        DirectionCounter = 0;
+            //        foreach (Coordinate d in AllAdjantDirections)
+            //        {
+            //            TestCoordinate = p.GetCurrentPosition().GetSum(d);
+            //            if (!TheGrid[TestCoordinate.x, TestCoordinate.y])
+            //                DirectionCounter++;
+            //            IsCrossing = DirectionCounter > 2;
+            //        }
+            //        foreach (Coordinate d in AllAdjantDirections)
+            //        {
+            //            TestCoordinate = p.GetCurrentPosition().GetSum(d);
+            //            if (TestCoordinate.IsInPositiveBounds(MaxX - 1, MaxY - 1) & !TheGrid[TestCoordinate.x, TestCoordinate.y] & !p.HasVisited(TestCoordinate))
+            //            {
+            //                Digesting = new PathFinder(TestCoordinate, p.getVisitedPositions(), p.getTargets());
+            //                if (!PathDigests.Contains(Digesting.MakePathDigest()))
+            //                {
+            //                    NextPaths.Add(new PathFinder(TestCoordinate, p.getVisitedPositions(), p.getTargets()));
+            //                    if (IsCrossing)
+            //                        PathDigests.Add(Digesting.MakePathDigest());
+            //                }
+            //            }
+            //        }
+            //    }
+            //    Paths = new List<PathFinder>(NextPaths);
+            //    NextPaths.Clear();
+            //}
+            Sum2--;
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;
             return "Del 1: " + Sum + " och del 2: " + Sum2 + " Executed in " + ts.TotalMilliseconds.ToString() + " ms";

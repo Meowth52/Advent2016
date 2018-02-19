@@ -11,25 +11,29 @@ namespace Advent2016
         Coordinate CurrentPosition;
         List<Coordinate> VisitedPositions;
         Dictionary<char, Coordinate> Targets;
-        public PathFinder(Coordinate c, List<Coordinate> v, Dictionary<char,Coordinate> t)
+        public bool FoundOnce;
+        public PathFinder(Coordinate c, List<Coordinate> v, Dictionary<char, Coordinate> t, bool f)
         {
             CurrentPosition = c;
-            VisitedPositions = v;
-            Targets = t;
+            VisitedPositions = new List<Coordinate>(v);
+            Targets = new Dictionary<char, Coordinate>(t);
             VisitedPositions.Add(CurrentPosition);
+            FoundOnce = f;
         }
         public PathFinder(Dictionary<char, Coordinate> t)
         {
             CurrentPosition = t['0'];
             VisitedPositions = new List<Coordinate>();
+            VisitedPositions.Add(CurrentPosition);
             Targets = t;
             Targets.Remove('0');
+            FoundOnce = false;
         }
         public bool TargetFound()
         {
             bool FoundIt = false;
             char RemoveThis = '_';
-            foreach(KeyValuePair<char, Coordinate> k in Targets)
+            foreach (KeyValuePair<char, Coordinate> k in Targets)
             {
                 if (k.Value.IsOn(CurrentPosition))
                 {
@@ -41,6 +45,12 @@ namespace Advent2016
             {
                 Targets.Remove(RemoveThis);
                 VisitedPositions.Clear();
+                VisitedPositions.Add(CurrentPosition);
+            }
+            if (Targets.Count == 0 &!FoundOnce)
+            {
+                Targets.Add('1', new Coordinate(3,5));
+                FoundOnce = true;
             }
             return Targets.Count == 0;
         }
@@ -63,6 +73,16 @@ namespace Advent2016
         public Dictionary<char, Coordinate> getTargets()
         {
             return Targets;
+        }
+        public string MakePathDigest()
+        {
+            string PathDigest = "";
+            PathDigest += CurrentPosition.ToString();
+            foreach(KeyValuePair<char, Coordinate> c in Targets)
+            {
+                PathDigest += c.ToString();
+            }
+            return PathDigest;
         }
     }
 }

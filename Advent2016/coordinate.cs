@@ -28,5 +28,9 @@
         {
             return (x >= 0 && y >= 0 && x <= x2 && y <= y2);
         }
+        public override string ToString()
+        {
+            return string.Format("{0},{1}", x, y);
+        }
     }
 }
