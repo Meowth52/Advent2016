@@ -57,7 +57,9 @@ namespace Advent2016
                         TwoPlaces.Add(ky.Key, ky.Value);
                         KeyValuePair<string, int> WhyCantIUseThisDirectly = GetDistance(TwoPlaces, TheGrid);
                         if (!Distances.ContainsKey(WhyCantIUseThisDirectly.Key))
+                        {
                             Distances.Add(WhyCantIUseThisDirectly.Key, WhyCantIUseThisDirectly.Value);
+                        }
                         TwoPlaces.Clear();
                     }
                 }
@@ -72,9 +74,61 @@ namespace Advent2016
                 PossibleSequence.Add(k.Key);
                 TheFirstSequence += k.Key;
             }
+            TheFirstSequence = TheFirstSequence.Remove(0, 1);
             AllThePossibleSequences = Purme.GetStrings(TheFirstSequence);
-            Sum--;
-            Sum2--;
+            int TestLenght;
+            string TestString;
+            //make a big sum
+            foreach (KeyValuePair<string, int> k in Distances)
+                Sum += k.Value;
+            Sum2 += Sum;
+            //Go through all the strings
+            foreach (string s in AllThePossibleSequences)
+            {
+                TestLenght = 0;
+                TestString = s.Insert(0, "0");
+                string TesterString;
+                List<char> ToSort = new List<char>();
+                for(int i = 0; i < s.Length;i++)
+                {
+                    TesterString = TestString.Substring(i, 2);
+                    foreach (char c in TesterString)
+                        ToSort.Add(c);
+                    ToSort.Sort();
+                    TesterString = "";
+                    foreach (char c in ToSort)
+                        TesterString += c;
+                    ToSort.Clear();
+                    TestLenght += Distances[TesterString];
+
+                }
+                if (TestLenght < Sum)
+                    Sum = TestLenght;
+            }
+            // del 2
+            foreach (string s in AllThePossibleSequences)
+            {
+                TestLenght = 0;
+                TestString = s.Insert(0, "0");
+                TestString += "0";
+                string TesterString;
+                List<char> ToSort = new List<char>();
+                for (int i = 0; i <= s.Length; i++)
+                {
+                    TesterString = TestString.Substring(i, 2);
+                    foreach (char c in TesterString)
+                        ToSort.Add(c);
+                    ToSort.Sort();
+                    TesterString = "";
+                    foreach (char c in ToSort)
+                        TesterString += c;
+                    ToSort.Clear();
+                    TestLenght += Distances[TesterString];
+
+                }
+                if (TestLenght < Sum2)
+                    Sum2 = TestLenght;
+            }
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;
             return "Del 1: " + Sum + " och del 2: " + Sum2 + " Executed in " + ts.TotalMilliseconds.ToString() + " ms";
