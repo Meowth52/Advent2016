@@ -11,23 +11,21 @@ namespace Advent2016
         Coordinate CurrentPosition;
         List<Coordinate> VisitedPositions;
         Dictionary<char, Coordinate> Targets;
-        public bool FoundOnce;
-        public PathFinder(Coordinate c, List<Coordinate> v, Dictionary<char, Coordinate> t, bool f)
+        public PathFinder(Coordinate c, List<Coordinate> v, Dictionary<char, Coordinate> t)
         {
             CurrentPosition = c;
             VisitedPositions = new List<Coordinate>(v);
             Targets = new Dictionary<char, Coordinate>(t);
             VisitedPositions.Add(CurrentPosition);
-            FoundOnce = f;
         }
         public PathFinder(Dictionary<char, Coordinate> t)
         {
-            CurrentPosition = t['0'];
+            char SomewhereToStart = t.First().Key;
+            CurrentPosition = t[SomewhereToStart];
             VisitedPositions = new List<Coordinate>();
             VisitedPositions.Add(CurrentPosition);
             Targets = t;
-            Targets.Remove('0');
-            FoundOnce = false;
+            Targets.Remove(SomewhereToStart);
         }
         public bool TargetFound()
         {
@@ -46,11 +44,6 @@ namespace Advent2016
                 Targets.Remove(RemoveThis);
                 VisitedPositions.Clear();
                 VisitedPositions.Add(CurrentPosition);
-            }
-            if (Targets.Count == 0 &!FoundOnce)
-            {
-                Targets.Add('1', new Coordinate(3,5));
-                FoundOnce = true;
             }
             return Targets.Count == 0;
         }

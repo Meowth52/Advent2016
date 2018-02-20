@@ -86,6 +86,7 @@
     <Compile Include="PathFinder.cs" />
     <Compile Include="Room.cs" />
     <Compile Include="schmenum.cs" />
+    <Compile Include="StringPermutator.cs" />
     <Compile Include="Stub.cs" />
     <Compile Include="Triangle.cs" />
     <Page Include="MainWindow.xaml">
