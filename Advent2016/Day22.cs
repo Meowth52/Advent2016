@@ -44,16 +44,16 @@ namespace Advent2016
             AllAdjantDirections.Add(new Coordinate(0, 1));
             AllAdjantDirections.Add(new Coordinate(0, -1));
             AllAdjantDirections.Add(new Coordinate(-1, 0));
-            //foreach (GridNode g in GridNodes)
-            //{
-            //    GridDic.Add(g.GetID(), g);
-            //    if (g.GetID().x > GridMax.x)
-            //        GridMax.x = g.GetID().x;
-            //    if (g.GetID().y > GridMax.y)
-            //        GridMax.y = g.GetID().y;
-            //    if (g.IsEmpty())
-            //        TheEmptyOne = g;
-            //}
+            foreach (GridNode g in GridNodes)
+            {
+                GridDic.Add(g.GetID(), g);
+                if (g.GetID().x > GridMax.x)
+                    GridMax.x = g.GetID().x;
+                if (g.GetID().y > GridMax.y)
+                    GridMax.y = g.GetID().y;
+                if (g.IsEmpty())
+                    TheEmptyOne = g.GetID();
+            }
             Coordinate Target = new Coordinate(0,0);
             Coordinate TheData = new Coordinate(GridMax.x, 0);
             Coordinate LeftOfData;
