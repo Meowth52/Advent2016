@@ -1,4 +1,6 @@
-﻿namespace Advent2016
+﻿using System;
+using System.Collections.Generic;
+namespace Advent2016
 {
     internal class Coordinate
     {
@@ -16,7 +18,7 @@
         }
         public bool IsOn(Coordinate c)
         {
-            return(c.x==this.x && c.y==this.y);
+            return (c.x == this.x && c.y == this.y);
         }
         public void AddTo(Coordinate A)
         {
@@ -36,6 +38,26 @@
         public override string ToString()
         {
             return string.Format("{0},{1}", x, y);
+        }
+    }
+    class CoordinateEqualityComparer : IEqualityComparer<Coordinate>
+    {
+        public bool Equals(Coordinate b1, Coordinate b2)
+        {
+            if (b2 == null && b1 == null)
+                return true;
+            else if (b1 == null | b2 == null)
+                return false;
+            else if (b1.x == b2.x && b1.y == b2.y)
+                return true;
+            else
+                return false;
+        }
+
+        public int GetHashCode(Coordinate bx)
+        {
+            int hCode = bx.x ^ bx.y;
+            return hCode.GetHashCode();
         }
     }
 }

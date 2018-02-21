@@ -60,8 +60,8 @@ namespace Advent2016
             Coordinate TestCoordinate;
             List<Coordinate> VisitedPositions = new List<Coordinate>();
             VisitedPositions.Add(TheEmptyOne);
-            GridPathNodeFinder Path = new GridPathNodeFinder(TheData, TheEmptyOne, new List<Coordinate>());
             bool DeadTrail = true;
+            int HowDeadYouSay = 0;
             while (!TheData.IsOn(Target))
             {
                 LeftOfData = GridDic[TheData].GetLeftCoordinate();
@@ -71,6 +71,7 @@ namespace Advent2016
                     GridDic[TheData].Clear();
                     TheData.x--;
                     TheEmptyOne.x++;
+                    Sum2++;
                     continue;
                 }
                 foreach (Coordinate c in AllAdjantDirections)
@@ -84,11 +85,17 @@ namespace Advent2016
                         TheEmptyOne = TheData.GetSum(c);
                         VisitedPositions.Add(TestCoordinate);
                         DeadTrail = false;
+                        HowDeadYouSay = 0;
+                        Sum2++;
                     }
                 }
                 if (DeadTrail)
                 {
-                    //backtrack
+                    HowDeadYouSay++; //more dead
+                    GridDic[TheEmptyOne].Recive(GridDic[VisitedPositions[-HowDeadYouSay]]);
+                    GridDic[VisitedPositions[-HowDeadYouSay]].Clear();
+                    TheEmptyOne = VisitedPositions[-HowDeadYouSay];
+                    Sum2--;
                 }
             }
             stopWatch.Stop();
