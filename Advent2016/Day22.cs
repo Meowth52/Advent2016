@@ -40,10 +40,10 @@ namespace Advent2016
             Coordinate GridMax = new Coordinate(0, 0);
             Coordinate TheEmptyOne = new Coordinate(0,0);
             List<Coordinate> AllAdjantDirections = new List<Coordinate>();
-            AllAdjantDirections.Add(new Coordinate(1, 0));
-            AllAdjantDirections.Add(new Coordinate(0, 1));
-            AllAdjantDirections.Add(new Coordinate(0, -1));
             AllAdjantDirections.Add(new Coordinate(-1, 0));
+            AllAdjantDirections.Add(new Coordinate(0, -1));
+            AllAdjantDirections.Add(new Coordinate(0, 1));
+            AllAdjantDirections.Add(new Coordinate(1, 0));
             foreach (GridNode g in GridNodes)
             {
                 GridDic.Add(g.GetID(), g);
@@ -58,6 +58,10 @@ namespace Advent2016
             Coordinate TheData = new Coordinate(GridMax.x, 0);
             Coordinate LeftOfData;
             Coordinate TestCoordinate;
+            List<Coordinate> VisitedPositions = new List<Coordinate>();
+            VisitedPositions.Add(TheEmptyOne);
+            GridPathNodeFinder Path = new GridPathNodeFinder(TheData, TheEmptyOne, new List<Coordinate>());
+            bool DeadTrail = true;
             while (!TheData.IsOn(Target))
             {
                 LeftOfData = GridDic[TheData].GetLeftCoordinate();
@@ -66,15 +70,25 @@ namespace Advent2016
                     GridDic[LeftOfData].Recive(GridDic[TheData]);
                     GridDic[TheData].Clear();
                     TheData.x--;
+                    TheEmptyOne.x++;
                     continue;
                 }
                 foreach (Coordinate c in AllAdjantDirections)
                 {
+                    DeadTrail = true;
                     TestCoordinate = TheEmptyOne.GetSum(c);
-                    if (GridDic.ContainsKey(TestCoordinate) && GridDic[TheEmptyOne].IsViablePair(GridDic[TestCoordinate]))
+                    if (GridDic.ContainsKey(TestCoordinate) && GridDic[TheEmptyOne].IsViablePair(GridDic[TestCoordinate]) &! VisitedPositions.Contains(TestCoordinate) &! TestCoordinate.IsOn(TheData))
                     {
-
+                        GridDic[TheEmptyOne].Recive(GridDic[TestCoordinate]);
+                        GridDic[TestCoordinate].Clear();
+                        TheEmptyOne = TheData.GetSum(c);
+                        VisitedPositions.Add(TestCoordinate);
+                        DeadTrail = false;
                     }
+                }
+                if (DeadTrail)
+                {
+                    //backtrack
                 }
             }
             stopWatch.Stop();

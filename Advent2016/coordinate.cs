@@ -9,6 +9,11 @@
             this.x = x;
             this.y = y;
         }
+        public Coordinate(Coordinate c)
+        {
+            x = c.x;
+            y = c.y;
+        }
         public bool IsOn(Coordinate c)
         {
             return(c.x==this.x && c.y==this.y);

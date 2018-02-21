@@ -31,6 +31,16 @@ namespace Advent2016
             Int32.TryParse(Numbers[5], out UsePrecent);
             ID = new Coordinate(X, Y);
         }
+        public GridNode(GridNode g)
+        {
+            int X = g.X;
+            int Y = g.Y;
+            Coordinate ID = new Coordinate(g.ID);
+            int Size = g.Size;
+            int Used = g.Used;
+            int Avail = g.Avail;
+            int UsePrecent = g.UsePrecent;
+        }
         public bool IsViablePair(GridNode g)
         {
             return ID != g.ID && Used != 0 && Used <= g.Avail;
