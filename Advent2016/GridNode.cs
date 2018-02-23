@@ -60,10 +60,12 @@ namespace Advent2016
         public void Recive(GridNode g)
         {
             Used = g.Used;
+            Avail = Size - Used;
         }
         public void Clear()
         {
             Used = 0;
+            Avail = Size;
         }
 
     }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 namespace Advent2016
 {
-    internal class Coordinate
+    internal class Coordinate : IEquatable<Coordinate>
     {
         public int x;
         public int y;
@@ -38,6 +38,19 @@ namespace Advent2016
         public override string ToString()
         {
             return string.Format("{0},{1}", x, y);
+        }
+        public override int GetHashCode()
+        {
+            int hCode = x ^ y;
+            return hCode.GetHashCode();
+        }
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Coordinate);
+        }
+        public bool Equals(Coordinate obj)
+        {
+            return obj != null && obj.x == x && obj.y == y;
         }
     }
     class CoordinateEqualityComparer : IEqualityComparer<Coordinate>

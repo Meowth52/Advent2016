@@ -36,7 +36,8 @@ namespace Advent2016
                     if (A.IsViablePair(B))
                         Sum++;
             //Part 2
-            Dictionary<Coordinate, GridNode> GridDic = new Dictionary<Coordinate, GridNode>();
+            CoordinateEqualityComparer CoordinateCompare = new CoordinateEqualityComparer();
+            Dictionary<Coordinate, GridNode> GridDic = new Dictionary<Coordinate, GridNode>(CoordinateCompare);
             Coordinate GridMax = new Coordinate(0, 0);
             Coordinate TheEmptyOne = new Coordinate(0,0);
             List<Coordinate> AllAdjantDirections = new List<Coordinate>();
@@ -60,10 +61,12 @@ namespace Advent2016
             Coordinate TestCoordinate;
             List<Coordinate> VisitedPositions = new List<Coordinate>();
             VisitedPositions.Add(TheEmptyOne);
+            List<Coordinate> MoreVisitedPositions = new List<Coordinate>();
             bool DeadTrail = true;
             int HowDeadYouSay = 0;
             while (!TheData.IsOn(Target))
             {
+                MoreVisitedPositions.Add(TheEmptyOne);
                 LeftOfData = GridDic[TheData].GetLeftCoordinate();
                 if (GridDic[TheData].IsViablePair(GridDic[LeftOfData]))
                 {
@@ -72,29 +75,31 @@ namespace Advent2016
                     TheData.x--;
                     TheEmptyOne.x++;
                     Sum2++;
+                    VisitedPositions.Clear();
                     continue;
                 }
+                DeadTrail = true;
                 foreach (Coordinate c in AllAdjantDirections)
                 {
-                    DeadTrail = true;
                     TestCoordinate = TheEmptyOne.GetSum(c);
-                    if (GridDic.ContainsKey(TestCoordinate) && GridDic[TheEmptyOne].IsViablePair(GridDic[TestCoordinate]) &! VisitedPositions.Contains(TestCoordinate) &! TestCoordinate.IsOn(TheData))
+                    if (GridDic.ContainsKey(TestCoordinate) && GridDic[TestCoordinate].IsViablePair(GridDic[TheEmptyOne]) &! VisitedPositions.Contains(TestCoordinate) &! TestCoordinate.IsOn(TheData))
                     {
                         GridDic[TheEmptyOne].Recive(GridDic[TestCoordinate]);
                         GridDic[TestCoordinate].Clear();
-                        TheEmptyOne = TheData.GetSum(c);
+                        TheEmptyOne = TestCoordinate;
                         VisitedPositions.Add(TestCoordinate);
                         DeadTrail = false;
                         HowDeadYouSay = 0;
                         Sum2++;
+                        break;
                     }
                 }
                 if (DeadTrail)
                 {
                     HowDeadYouSay++; //more dead
-                    GridDic[TheEmptyOne].Recive(GridDic[VisitedPositions[-HowDeadYouSay]]);
-                    GridDic[VisitedPositions[-HowDeadYouSay]].Clear();
-                    TheEmptyOne = VisitedPositions[-HowDeadYouSay];
+                    GridDic[TheEmptyOne].Recive(GridDic[VisitedPositions[VisitedPositions.Count-1-HowDeadYouSay]]);
+                    GridDic[VisitedPositions[VisitedPositions.Count-1-HowDeadYouSay]].Clear();
+                    TheEmptyOne = VisitedPositions[VisitedPositions.Count-1-HowDeadYouSay];
                     Sum2--;
                 }
             }
