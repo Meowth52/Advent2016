@@ -33,13 +33,13 @@ namespace Advent2016
         }
         public GridNode(GridNode g)
         {
-            int X = g.X;
-            int Y = g.Y;
-            Coordinate ID = new Coordinate(g.ID);
-            int Size = g.Size;
-            int Used = g.Used;
-            int Avail = g.Avail;
-            int UsePrecent = g.UsePrecent;
+            X = g.X;
+            Y = g.Y;
+            ID = new Coordinate(g.ID);
+            Size = g.Size;
+            Used = g.Used;
+            Avail = g.Avail;
+            UsePrecent = g.UsePrecent;
         }
         public bool IsViablePair(GridNode g)
         {

@@ -57,51 +57,43 @@ namespace Advent2016
             }
             Coordinate Target = new Coordinate(0,0);
             Coordinate TheData = new Coordinate(GridMax.x, 0);
+            Coordinate Left = new Coordinate(-1, 0);
+            List<GridPathNodeFinder> Paths = new List<GridPathNodeFinder>();
+            Paths.Add(new GridPathNodeFinder(GridDic[TheData].GetLeftCoordinate(),TheEmptyOne, new List<Coordinate>(), GridDic));
+            List<GridPathNodeFinder> NextPaths = new List<GridPathNodeFinder>();
             Coordinate LeftOfData;
             Coordinate TestCoordinate;
             List<Coordinate> VisitedPositions = new List<Coordinate>();
             VisitedPositions.Add(TheEmptyOne);
             List<Coordinate> MoreVisitedPositions = new List<Coordinate>();
-            bool DeadTrail = true;
-            int HowDeadYouSay = 0;
-            while (!TheData.IsOn(Target))
+            bool GetOut = false;
+            while (!GetOut)
             {
-                MoreVisitedPositions.Add(TheEmptyOne);
-                LeftOfData = GridDic[TheData].GetLeftCoordinate();
-                if (GridDic[TheData].IsViablePair(GridDic[LeftOfData]))
+
+                Sum2++;
+                foreach (GridPathNodeFinder p in Paths)
                 {
-                    GridDic[LeftOfData].Recive(GridDic[TheData]);
-                    GridDic[TheData].Clear();
-                    TheData.x--;
-                    TheEmptyOne.x++;
-                    Sum2++;
-                    VisitedPositions.Clear();
-                    continue;
-                }
-                DeadTrail = true;
-                foreach (Coordinate c in AllAdjantDirections)
-                {
-                    TestCoordinate = TheEmptyOne.GetSum(c);
-                    if (GridDic.ContainsKey(TestCoordinate) && GridDic[TestCoordinate].IsViablePair(GridDic[TheEmptyOne]) &! VisitedPositions.Contains(TestCoordinate) &! TestCoordinate.IsOn(TheData))
+                    MoreVisitedPositions.Add(p.GetCurrentPosition());
+                    LeftOfData = p.GetTheData().GetSum(Left);
+                    if (p.IsLeftOfTheData())
                     {
-                        GridDic[TheEmptyOne].Recive(GridDic[TestCoordinate]);
-                        GridDic[TestCoordinate].Clear();
-                        TheEmptyOne = TestCoordinate;
-                        VisitedPositions.Add(TestCoordinate);
-                        DeadTrail = false;
-                        HowDeadYouSay = 0;
-                        Sum2++;
-                        break;
+                        if (p.IsOnTarget())
+                            GetOut = false;
+                        continue;
+                    }
+                    foreach (Coordinate c in AllAdjantDirections)
+                    {
+                        TestCoordinate = new Coordinate( p.GetCurrentPosition()).GetSum(c);
+                        if (p.IsViableMove(TestCoordinate))
+                        {
+                            GridPathNodeFinder Tempidemp = new GridPathNodeFinder(p);
+                            Tempidemp.MoveIt(TestCoordinate);
+                            NextPaths.Add(Tempidemp);
+                        }
                     }
                 }
-                if (DeadTrail)
-                {
-                    HowDeadYouSay++; //more dead
-                    GridDic[TheEmptyOne].Recive(GridDic[VisitedPositions[VisitedPositions.Count-1-HowDeadYouSay]]);
-                    GridDic[VisitedPositions[VisitedPositions.Count-1-HowDeadYouSay]].Clear();
-                    TheEmptyOne = VisitedPositions[VisitedPositions.Count-1-HowDeadYouSay];
-                    Sum2--;
-                }
+                Paths = new List<GridPathNodeFinder>(NextPaths);
+                NextPaths.Clear();
             }
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;
