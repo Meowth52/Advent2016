@@ -58,28 +58,28 @@ namespace Advent2016
             Coordinate Target = new Coordinate(0,0);
             Coordinate TheData = new Coordinate(GridMax.x, 0);
             Coordinate Left = new Coordinate(-1, 0);
+            int TheEmptyY = TheEmptyOne.y;
+            int TheEmptyX = TheEmptyOne.x;
             List<GridPathNodeFinder> Paths = new List<GridPathNodeFinder>();
-            Paths.Add(new GridPathNodeFinder(GridDic[TheData].GetLeftCoordinate(),TheEmptyOne, new List<Coordinate>(), GridDic));
+            Paths.Add(new GridPathNodeFinder(TheData,TheEmptyOne, new List<Coordinate>(), GridDic));
             List<GridPathNodeFinder> NextPaths = new List<GridPathNodeFinder>();
             Coordinate LeftOfData;
             Coordinate TestCoordinate;
-            List<Coordinate> VisitedPositions = new List<Coordinate>();
-            VisitedPositions.Add(TheEmptyOne);
             List<Coordinate> MoreVisitedPositions = new List<Coordinate>();
             bool GetOut = false;
             while (!GetOut)
             {
-
                 Sum2++;
                 foreach (GridPathNodeFinder p in Paths)
                 {
-                    MoreVisitedPositions.Add(p.GetCurrentPosition());
                     LeftOfData = p.GetTheData().GetSum(Left);
                     if (p.IsLeftOfTheData())
                     {
                         if (p.IsOnTarget())
-                            GetOut = false;
-                        continue;
+                            GetOut = true;
+                        NextPaths.Clear();
+                        NextPaths.Add(new GridPathNodeFinder(p));
+                        break;
                     }
                     foreach (Coordinate c in AllAdjantDirections)
                     {
@@ -88,13 +88,19 @@ namespace Advent2016
                         {
                             GridPathNodeFinder Tempidemp = new GridPathNodeFinder(p);
                             Tempidemp.MoveIt(TestCoordinate);
-                            NextPaths.Add(Tempidemp);
+                            if ((Tempidemp.GetCurrentPosition().y <= TheEmptyY || Tempidemp.GetCurrentPosition().y <= 4) && (Tempidemp.GetCurrentPosition().x >= TheEmptyX || (TheEmptyY > 10 || Math.Abs(TestCoordinate.x - p.GetTheData().x) < 5)))
+                            {
+                                TheEmptyY = Tempidemp.GetCurrentPosition().y;
+                                TheEmptyX = Tempidemp.GetCurrentPosition().x;
+                                NextPaths.Add(Tempidemp);
+                            }
                         }
                     }
                 }
                 Paths = new List<GridPathNodeFinder>(NextPaths);
                 NextPaths.Clear();
             }
+            //Sum2 -=2;
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;
             return "Del 1: " + Sum + " och del 2: " + Sum2 + " Executed in " + ts.TotalMilliseconds.ToString() + " ms";

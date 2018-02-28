@@ -16,7 +16,7 @@ namespace Advent2016
         Coordinate TheTarget;
         public GridPathNodeFinder(Coordinate theData,Coordinate TheEmptyOne, List<Coordinate> v, Dictionary<Coordinate,GridNode> d)
         {
-            CurrentPosition = TheEmptyOne;
+            CurrentPosition = new Coordinate( TheEmptyOne);
             VisitedPositions = new List<Coordinate>(v);
             TheData = new Coordinate(theData);
             VisitedPositions.Add(CurrentPosition);
@@ -41,6 +41,8 @@ namespace Advent2016
         {
             Coordinate LeftOfData;
             LeftOfData = GridDic[TheData].GetLeftCoordinate();
+            if (!GridDic.ContainsKey(LeftOfData))
+                return true;
             if (GridDic[TheData].IsViablePair(GridDic[LeftOfData]))
             {
                 GridDic[LeftOfData].Recive(GridDic[TheData]);
@@ -55,7 +57,7 @@ namespace Advent2016
         }
         public bool IsOnTarget()
         {
-            return CurrentPosition.IsOn(TheTarget);
+            return TheData.IsOn(TheTarget);
         }
         public bool IsViableMove(Coordinate TestCoordinate)
         {

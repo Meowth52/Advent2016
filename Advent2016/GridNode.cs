@@ -16,7 +16,6 @@ namespace Advent2016
         int Size;
         int Used;
         int Avail;
-        int UsePrecent;
         public GridNode(string s)
         {
             Regex NumberMatches = new Regex(@"\d+");
@@ -28,7 +27,6 @@ namespace Advent2016
             Int32.TryParse(Numbers[2], out Size);
             Int32.TryParse(Numbers[3], out Used);
             Int32.TryParse(Numbers[4], out Avail);
-            Int32.TryParse(Numbers[5], out UsePrecent);
             ID = new Coordinate(X, Y);
         }
         public GridNode(GridNode g)
@@ -39,11 +37,10 @@ namespace Advent2016
             Size = g.Size;
             Used = g.Used;
             Avail = g.Avail;
-            UsePrecent = g.UsePrecent;
         }
         public bool IsViablePair(GridNode g)
         {
-            return ID != g.ID && Used != 0 && Used <= g.Avail;
+            return ID != g.ID && Used <= g.Avail;
         }
         public Coordinate GetID()
         {
